@@ -34,9 +34,13 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'app.apps.AppConfig',
+    'django_keycloak.apps.KeycloakAppConfig',
+    'dynamic_fixtures'
 ]
 
 MIDDLEWARE = [
@@ -47,6 +51,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_keycloak.middleware.KeycloakStatelessBearerAuthenticationMiddleware',
+    # 'django_keycloak.middleware.RemoteUserAuthenticationMiddleware',
+]
+
+PASSWORD_HASHERS = [
+    'django_keycloak.hashers.PBKDF2SHA512PasswordHasher',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'django_keycloak.auth.backends.KeycloakIDTokenAuthorizationBackend'
 ]
 
 ROOT_URLCONF = 'antenatal_backed.urls'
@@ -99,6 +114,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+KEYCLOAK_OIDC_PROFILE_MODEL = 'django_keycloak.RemoteUserOpenIdConnectProfile'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -123,3 +140,25 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    }
+}
+
+KEYCLOAK_BEARER_AUTHENTICATION_EXEMPT_PATHS = [
+    r'^admin/'
+]
+
+KEYCLOAK_SKIP_SSL_VERIFY = True
