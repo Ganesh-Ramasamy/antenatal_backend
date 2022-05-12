@@ -15,5 +15,5 @@ class Fixture(BaseFixture):
         Client.objects.get_or_create(
             realm=realm,
             client_id='resource-provider-api',
-            secret='145a828b-bbb1-44b0-81f5-d3d669ab59f7'
+            secret='z91J0XCEIcz7qQTfZeY5MbDaiTwLQyy7'
         )
