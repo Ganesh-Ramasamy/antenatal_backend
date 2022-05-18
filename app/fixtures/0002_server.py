@@ -7,5 +7,5 @@ class Fixture(BaseFixture):
 
     def load(self):
         Server.objects.get_or_create(
-            url='https://identity.localhost.yarf.nl'
+            url='http://localhost:8081'
         )

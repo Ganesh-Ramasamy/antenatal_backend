@@ -10,10 +10,10 @@ class Fixture(BaseFixture):
     )
 
     def load(self):
-        realm = Realm.objects.get(name='example')
+        realm = Realm.objects.get(name='antenatal-realm')
 
         Client.objects.get_or_create(
             realm=realm,
-            client_id='resource-provider-api',
-            secret='z91J0XCEIcz7qQTfZeY5MbDaiTwLQyy7'
+            client_id='antenatal-back-end',
+            secret='145a828b-bbb1-44b0-81f5-d3d669ab59f7'
         )
